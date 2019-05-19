@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= title %></title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+    <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+  </head>
+  <body>
+    <h1><%= title %></h1>
+	<input type="text" id="searchkey" />	
+	<button>搜索</button>
+    <p>Welcome to <%= title %></p>
+  </body>
+</html>
+<script type="text/javascript">
+	$(function(){
+		$('#searchkey').on('keypress', function(e, key){
+			let it = $('#searchkey');
+			console.log(it.val());
+			if(it.val().trim() == "")return;
+			$.ajax({
+				url: '/search/key',
+				data: {
+					key: it.val(),
+				},
+				headers: {
+					//'Content-Type': 'application/json',
+				},
+				method: 'POST',
+				success: function(resp){
+					console.log('success', resp);
+				},
+				fail: function(resp){
+					console.log('fail', resp);
+					//throw new Error();
+				},
+			});
+		})		
+	});
+</script>
